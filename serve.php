@@ -13,18 +13,19 @@ echo "Press Ctrl+C to stop the server\n";
 
 $routerFile = __DIR__ . '/router.php';
 if (!file_exists($routerFile)) {
-    file_put_contents($routerFile, '<?php
-        // Router script
-        $uri = parse_url($_SERVER["REQUEST_URI"], PHP_URL_PATH);
-        $file = __DIR__ . $uri;
-        
-        if (is_file($file)) {
-            return false; // Serve the requested file
-        }
-        
-        // Include index.php for all other requests
-        include __DIR__ . "/index.php";
-    ');
+file_put_contents($routerFile, <<<'PHP'
+<?php
+ $uri = parse_url($_SERVER["REQUEST_URI"], PHP_URL_PATH);
+$file = __DIR__ . $uri;
+
+// ✅ ถ้าไฟล์มีอยู่จริง ให้ PHP server เสิร์ฟเอง
+if (is_file($file)) {
+    return false;
+}
+
+// 🛠️ ไม่ใช่ไฟล์ → ส่งให้ index.php จัดการ
+include __DIR__ . '/index.php';
+PHP);
 }
 
 shell_exec(sprintf(

@@ -39,5 +39,9 @@ if (strpos($request, '/js/') === 0 || strpos($request, '/uploads/') === 0) {
 
 
 
+
+require __DIR__ . '/global.php';
+
 $router = new Router();
+
 $router->dispatch();
