@@ -10,7 +10,32 @@ function useDB()
                 show_error_log('DB Config: ' . print_r($config['db'], true));
 
                 $dbConfig = $config['db'];
+                $driver = $dbConfig['driver'] ?? 'mysql';
 
+                if ($driver === 'none') {
+                    show_error_log('DB driver is set to none. Skipping connection.');
+                    return null;
+                }
+
+                if ($driver === 'sqlite') {
+                    $path = $dbConfig['sqlite_path'] ?? (__DIR__ . '/../storage/database.sqlite');
+                    $dsn = 'sqlite:' . $path;
+                    show_error_log('Attempting SQLite connection with DSN: ' . $dsn);
+                    $db = new PDO(
+                        $dsn,
+                        null,
+                        null,
+                        [
+                            PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
+                            PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
+                            PDO::ATTR_EMULATE_PREPARES => false
+                        ]
+                    );
+                    show_error_log('SQLite connection successful');
+                    return $db;
+                }
+
+           
                 $requiredSettings = ['host', 'database', 'username', 'port', 'charset'];
                 foreach ($requiredSettings as $setting) {
                     if (!isset($dbConfig[$setting]) || $dbConfig[$setting] === null) {
@@ -42,7 +67,7 @@ function useDB()
                     ]
                 );
 
-                show_error_log('Database connection successful');
+                show_error_log('MySQL connection successful');
                 return $db;
 
             } catch (PDOException $e) {

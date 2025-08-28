@@ -22,12 +22,17 @@ $config = [
         'socket_port' => $_ENV['SOCKET_PORT'] ?? null,
     ],
     'db' => [
+        // driver: mysql | sqlite | none
+        'driver' => $_ENV['DB_DRIVER'] ?? 'mysql',
+        // MySQL settings (kept for backward compatibility)
         'host' => $_ENV['MYSQL_HOST'] ?? null,
         'database' => $_ENV['MYSQL_DATABASE'] ?? null,
         'username' => $_ENV['MYSQL_USER'] ?? null,
         'password' => $_ENV['MYSQL_PASSWORD'] ?? null,
         'port' => $_ENV['MYSQL_PORT'] ?? null,
         'charset' => $_ENV['MYSQL_CHARSET'] ?? null,
+        // SQLite settings
+        'sqlite_path' => $_ENV['SQLITE_PATH'] ?? (__DIR__ . '/storage/database.sqlite'),
     ],
     'layout' => [
         'default_head' => '
