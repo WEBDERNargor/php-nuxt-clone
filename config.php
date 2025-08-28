@@ -20,6 +20,21 @@ $config = [
         'jwt_secret' => $_ENV['JWT_SECRET'] ?? null,
         'name' => $_ENV['WEB_NAME'] ?? null,
         'socket_port' => $_ENV['SOCKET_PORT'] ?? null,
+    'temp_extensions' => [
+            'jpg' => 'image/jpeg',
+            'jpeg' => 'image/jpeg',
+            'png' => 'image/png',
+            'gif' => 'image/gif',
+            'webp' => 'image/webp',
+        ],
+        'upload_extensions' => [
+            'jpg' => 'image/jpeg',
+            'jpeg' => 'image/jpeg',
+            'png' => 'image/png',
+            'gif' => 'image/gif',
+            'webp' => 'image/webp',
+        ],
+        'protect_folder' => ['protect/uploads', 'temp','protect'],
     ],
     'db' => [
         // driver: mysql | sqlite | none
