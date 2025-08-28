@@ -10,4 +10,4 @@ Pages layouts components system by PHP starter code.
 
 ##How to use
 ```bash
-composer require webdernargor/php-nuxt-clone
+composer create-project webdernargor/php-nuxt-clone
