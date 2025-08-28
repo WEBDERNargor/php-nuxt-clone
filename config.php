@@ -13,7 +13,7 @@ if($_ENV['WEB_MODE']=='development'){
     show_error_log("JWT_SECRET value: " . ($_ENV['JWT_SECRET'] ?? 'not set'));
 }
 $config = [
-   
+    
     'web' => [
         'mode'=> $_ENV['WEB_MODE'] ?? null,
         'url' => $_ENV['WEB_URL'] ?? null,
