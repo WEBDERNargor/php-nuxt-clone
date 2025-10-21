@@ -1,6 +1,5 @@
 <?php
 require_once __DIR__ . '/../vendor/autoload.php';
-require_once __DIR__ . '/../includes/corefunction.php';
 $db = composables('useDB')['connect']();
 header('Content-Type: application/json; charset=utf-8');
 
