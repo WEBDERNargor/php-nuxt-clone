@@ -17,7 +17,6 @@ starter with layouts, pages (file-based routing), components, controllers, compo
 
 ## Documentation
 - Online: https://thungthao.online
-- Local (dev): open `/docs` (e.g., http://127.0.0.1:5000/docs)
 
 ## Requirements
 - PHP >= 7.0
