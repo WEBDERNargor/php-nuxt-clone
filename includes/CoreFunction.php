@@ -60,8 +60,8 @@ function deletecookie($name)
 
 function show_error_log($value)
 {
-    $config = getConfig();
-    if ($config['web']['mode'] == 'development') {
+    $mode = $_ENV['WEB_MODE'] ?? getenv('WEB_MODE') ?? null;
+    if ($mode === 'development') {
         error_log($value);
     }
 }
