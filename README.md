@@ -141,25 +141,7 @@ echo $params['id'] ?? '';
 
 If you formalize terms later, add a dedicated `LICENSE` file and update this section.
 
-## Release Notes
 
-- **v0.3.0** — Docs and Landing
-  - Added built-in documentation at `/docs` (navbar, sidebar, client-side search)
-  - Updated default layout with TailwindCSS + jQuery CDN and responsive UX
-  - Landing page at `/` using default layout without sidebar
-  - Main navbar includes a Docs link
-
-- **v0.2.0** — Core Structure & Routing
-  - File-based routing in `pages/` with dynamic params `[param]` and folder `index.php`
-  - Composables pattern and database helper (`composables/useDB.php`)
-  - Controllers autoloaded under `App\\Controllers\\`
-  - API endpoints in `api/` served as JSON
-  - Dev server via `composer web` (uses `serve.php`)
-  - `.htaccess` rewrite rules for clean URLs
-
-- **v0.1.0** — Initial Scaffold
-  - Base structure for layouts, pages, components
-  - Global hooks via `global.php`
 
 ## Authors
 - [@WEBDERNargor](https://github.com/WEBDERNargor)
