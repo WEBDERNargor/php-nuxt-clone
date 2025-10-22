@@ -23,6 +23,9 @@
         "web": "php serve.php",
         "post-autoload-dump": [
         "echo 'Autoload dumped successfully!'"
+    ],
+    "post-create-project-cmd": [
+        "@php -r \"if (!file_exists('.env') && file_exists('example.env')) { copy('example.env', '.env'); echo '.env created'.PHP_EOL; }\""
     ]
     },
     "config": {
