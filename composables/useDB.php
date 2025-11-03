@@ -35,7 +35,43 @@ function useDB()
                     return $db;
                 }
 
-           
+                if ($driver === 'sqlsrv') {
+                    $requiredSettings = ['host', 'database', 'username', 'port', 'charset'];
+                    foreach ($requiredSettings as $setting) {
+                        if (!isset($dbConfig[$setting]) || $dbConfig[$setting] === null) {
+                            show_error_log("Missing required database setting: $setting");
+                            throw new Exception("Database configuration error: missing $setting");
+                        }
+                    }
+
+                    $server = $dbConfig['host'] . ($dbConfig['port'] ? "," . $dbConfig['port'] : "");
+                    $dsn = 'sqlsrv:Server=' . $server . ';Database=' . $dbConfig['database'];
+                    show_error_log('Attempting SQLSRV connection with DSN: ' . $dsn);
+                    $password = $dbConfig['password'] ?? '';
+
+                    $options = [
+                        PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
+                        PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
+                        PDO::ATTR_EMULATE_PREPARES => false
+                    ];
+
+                    if (defined('PDO::SQLSRV_ATTR_ENCODING') && defined('PDO::SQLSRV_ENCODING_UTF8')) {
+                        $lower = strtolower($dbConfig['charset']);
+                        if ($lower === 'utf8' || $lower === 'utf-8') {
+                            $options[PDO::SQLSRV_ATTR_ENCODING] = PDO::SQLSRV_ENCODING_UTF8;
+                        }
+                    }
+
+                    $db = new PDO(
+                        $dsn,
+                        $dbConfig['username'],
+                        $password,
+                        $options
+                    );
+                    show_error_log('SQLSRV connection successful');
+                    return $db;
+                }
+
                 $requiredSettings = ['host', 'database', 'username', 'port', 'charset'];
                 foreach ($requiredSettings as $setting) {
                     if (!isset($dbConfig[$setting]) || $dbConfig[$setting] === null) {

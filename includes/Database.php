@@ -40,6 +40,38 @@ class Database
                 return;
             }
 
+            if ($driver === 'sqlsrv') {
+                $host = $this->config['db']['host'] ?? '';
+                $port = $this->config['db']['port'] ?? '';
+                $dbname = $this->config['db']['database'] ?? '';
+                $server = $host . ($port ? "," . $port : "");
+                $dsn = "sqlsrv:Server=" . $server . ";Database=" . $dbname;
+
+                $options = [
+                    PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
+                    PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
+                    PDO::ATTR_EMULATE_PREPARES => false,
+                ];
+
+                $charset = $this->config['db']['charset'] ?? null;
+                if ($charset) {
+                    if (defined('PDO::SQLSRV_ATTR_ENCODING') && defined('PDO::SQLSRV_ENCODING_UTF8')) {
+                        $lower = strtolower($charset);
+                        if ($lower === 'utf8' || $lower === 'utf-8') {
+                            $options[PDO::SQLSRV_ATTR_ENCODING] = PDO::SQLSRV_ENCODING_UTF8;
+                        }
+                    }
+                }
+
+                $this->pdo = new PDO(
+                    $dsn,
+                    $this->config['db']['username'] ?? null,
+                    $this->config['db']['password'] ?? null,
+                    $options
+                );
+                return;
+            }
+        
         
             $dbname = $this->config['db']['database'] ?? '';
             $dsn = sprintf(

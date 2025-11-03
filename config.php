@@ -39,14 +39,12 @@ $config = [
     'db' => [
         // driver: mysql | sqlite | none
         'driver' => $_ENV['DB_DRIVER'] ?? 'mysql',
-        // MySQL settings (kept for backward compatibility)
-        'host' => $_ENV['MYSQL_HOST'] ?? null,
-        'database' => $_ENV['MYSQL_DATABASE'] ?? null,
-        'username' => $_ENV['MYSQL_USER'] ?? null,
-        'password' => $_ENV['MYSQL_PASSWORD'] ?? null,
-        'port' => $_ENV['MYSQL_PORT'] ?? null,
-        'charset' => $_ENV['MYSQL_CHARSET'] ?? null,
-        // SQLite settings
+        'host' => (($_ENV['DB_DRIVER'] ?? 'mysql') === 'sqlsrv') ? ($_ENV['SQLSRV_HOST'] ?? ($_ENV['MYSQL_HOST'] ?? null)) : ($_ENV['MYSQL_HOST'] ?? null),
+        'database' => (($_ENV['DB_DRIVER'] ?? 'mysql') === 'sqlsrv') ? ($_ENV['SQLSRV_DATABASE'] ?? ($_ENV['MYSQL_DATABASE'] ?? null)) : ($_ENV['MYSQL_DATABASE'] ?? null),
+        'username' => (($_ENV['DB_DRIVER'] ?? 'mysql') === 'sqlsrv') ? ($_ENV['SQLSRV_USER'] ?? ($_ENV['MYSQL_USER'] ?? null)) : ($_ENV['MYSQL_USER'] ?? null),
+        'password' => (($_ENV['DB_DRIVER'] ?? 'mysql') === 'sqlsrv') ? ($_ENV['SQLSRV_PASSWORD'] ?? ($_ENV['MYSQL_PASSWORD'] ?? null)) : ($_ENV['MYSQL_PASSWORD'] ?? null),
+        'port' => (($_ENV['DB_DRIVER'] ?? 'mysql') === 'sqlsrv') ? ($_ENV['SQLSRV_PORT'] ?? '1433') : ($_ENV['MYSQL_PORT'] ?? null),
+        'charset' => (($_ENV['DB_DRIVER'] ?? 'mysql') === 'sqlsrv') ? ($_ENV['SQLSRV_CHARSET'] ?? 'utf8') : ($_ENV['MYSQL_CHARSET'] ?? null),
         'sqlite_path' => $_ENV['SQLITE_PATH'] ?? (__DIR__ . '/storage/database.sqlite'),
     ],
     'layout' => [
